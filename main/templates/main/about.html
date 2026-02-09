@@ -1,0 +1,287 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Герой-секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <div class="text-center mb-5">
+                <h6 class="text-wine mb-3"><i class="fas fa-crown me-2"></i>ИСТОРИЯ ДОМА</h6>
+                <h1 class="display-4 fw-bold mb-4">Stellar Spirits</h1>
+                <p class="lead text-muted">Традиции качества с 1995 года</p>
+            </div>
+            
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <h2 class="fw-bold mb-4">Наша философия</h2>
+                    <p class="lead mb-4">
+                        Stellar Spirits — это не просто магазин элитного алкоголя. 
+                        Это дом, где каждая бутылка рассказывает свою историю, 
+                        каждый напиток — произведение искусства, а каждый клиент — 
+                        ценитель прекрасного.
+                    </p>
+                    <p class="mb-4">
+                        Мы верим, что настоящий алкоголь — это не просто напиток, 
+                        а путешествие во времени и пространстве. Каждый глоток должен 
+                        переносить вас в виноградники Тосканы, на вискокурни Шотландии 
+                        или в подвалы Шампани.
+                    </p>
+                    <div class="d-flex gap-3 mt-4">
+                        <div class="text-center">
+                            <h3 class="text-wine fw-bold">28+</h3>
+                            <p class="small">лет на рынке</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-wine fw-bold">1500+</h3>
+                            <p class="small">эксклюзивных напитков</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-wine fw-bold">12</h3>
+                            <p class="small">стран поставщиков</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4 mt-lg-0">
+                    <div class="position-relative">
+                        <img src="{% static 'images/about-hero.jpg' %}" 
+                             class="img-fluid rounded shadow-lg"
+                             alt="Наш бутик"
+                             style="border: 2px solid #8b0000; max-height: 400px; width: 100%; object-fit: cover;">
+                        <div class="position-absolute bottom-0 start-0 w-100 p-3" 
+                             style="background: linear-gradient(transparent, rgba(0,0,0,0.7))">
+                            <p class="text-white mb-0 small">Наш бутик в Москве, ул. Тверская, 15</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- История -->
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <h2 class="fw-bold text-center mb-5">История дома</h2>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="text-center p-4">
+                        <div class="mb-4">
+                            <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                <span class="text-wine fw-bold fs-3">1995</span>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Основание</h5>
+                        <p class="text-muted small">
+                            Открытие первого бутика на Арбате. Начало работы с эксклюзивными поставщиками из Франции и Италии.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="text-center p-4">
+                        <div class="mb-4">
+                            <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                <span class="text-wine fw-bold fs-3">2005</span>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Расширение</h5>
+                        <p class="text-muted small">
+                            Открытие консьерж-сервиса и запуск онлайн-магазина. Выход на международный уровень.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="text-center p-4">
+                        <div class="mb-4">
+                            <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                <span class="text-wine fw-bold fs-3">2026</span>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Современность</h5>
+                        <p class="text-muted small">
+                            Лидер на рынке элитного алкоголя в России. Эксклюзивные партнёрства с лучшими домами мира.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Ценности -->
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <h2 class="fw-bold text-center mb-5">Наши ценности</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start mb-3">
+                                <div class="bg-wine bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-gem fa-2x text-wine"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-2">Подлинность</h5>
+                                    <p class="card-text text-muted">
+                                        Каждый напиток проходит тройную проверку подлинности. 
+                                        Мы работаем только с официальными дистрибьюторами и производителями.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start mb-3">
+                                <div class="bg-wine bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-user-tie fa-2x text-wine"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-2">Экспертность</h5>
+                                    <p class="card-text text-muted">
+                                        Наши сомелье — профессионалы с международными сертификатами. 
+                                        Они подберут напиток именно под ваш вкус и случай.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start mb-3">
+                                <div class="bg-wine bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-leaf fa-2x text-wine"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-2">Устойчивость</h5>
+                                    <p class="card-text text-muted">
+                                        Поддерживаем экологичные винодельни и дистиллерии. 
+                                        Используем перерабатываемую упаковку.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start mb-3">
+                                <div class="bg-wine bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-handshake fa-2x text-wine"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-2">Доверие</h5>
+                                    <p class="card-text text-muted">
+                                        Более 10 000 постоянных клиентов доверяют нам выбор напитков 
+                                        для важных событий и личной коллекции.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Команда -->
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <h2 class="fw-bold text-center mb-5">Наши эксперты</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                     style="width: 100px; height: 100px;">
+                                    <i class="fas fa-user-tie fa-3x text-wine"></i>
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-2">Антон Волков</h5>
+                            <p class="text-wine small mb-3">Главный сомелье</p>
+                            <p class="card-text text-muted small">
+                                Сертифицированный винный эксперт (WSET Level 4). 
+                                15 лет работы в элитных ресторанах Парижа и Лондона.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                     style="width: 100px; height: 100px;">
+                                    <i class="fas fa-whiskey-glass fa-3x text-wine"></i>
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-2">Мария Соколова</h5>
+                            <p class="text-wine small mb-3">Эксперт по крепкому алкоголю</p>
+                            <p class="card-text text-muted small">
+                                Член Ассоциации виски-экспертов Шотландии. 
+                                Автор книги "Искусство виски".
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                     style="width: 100px; height: 100px;">
+                                    <i class="fas fa-champagne-glasses fa-3x text-wine"></i>
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-2">Дмитрий Иванов</h5>
+                            <p class="text-wine small mb-3">Шампань-эксперт</p>
+                            <p class="card-text text-muted small">
+                                Проходил стажировку в доме Moët & Chandon. 
+                                Специалист по игристым винам и шампанскому.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5">
+    <div class="container">
+        <div class="card border-0" style="background: linear-gradient(135deg, rgba(109, 31, 31, 0.9), rgba(139, 0, 0, 0.9));">
+            <div class="card-body p-5 text-center">
+                <h2 class="mb-4">Присоединяйтесь к клубу Stellar Spirits</h2>
+                <p class="lead mb-4">Получайте эксклюзивные предложения и персональные подборки</p>
+                <a href="{% url 'users:register' %}" class="btn btn-light btn-lg px-5">
+                    <i class="fas fa-user-plus me-2"></i>Вступить в клуб
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

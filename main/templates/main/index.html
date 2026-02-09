@@ -1,22 +1,189 @@
+
 {% extends 'main/base.html' %}
-
-
+{% load static %}
 {% block content %}
-
- <section class="py-5 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">Премиальные алкогольные напитки</h1>
-                <p class="lead text-body-secondary">Лучшие алкогольные напитки со всего света и не только</p>
-                <p><a href="{% url 'main:categories' %}" class="btn btn-primary my-2">Категории</a></p>
+<!-- Главный баннер -->
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h6 class="text-wine mb-3"><i class="fas fa-star me-2"></i>ЭКСКЛЮЗИВНАЯ КОЛЛЕКЦИЯ</h6>
+                    <h1 class="display-4 fw-bold mb-4">
+                        Элитные алкогольные<br>
+                        <span class="text-wine">напитки премиум-класса</span>
+                    </h1>
+                    <p class="lead mb-4">
+                        Эксклюзивная коллекция премиальных напитков со всего мира.
+                        Только оригинальная продукция высшего качества, отобранная
+                        нашими экспертами. Гарантия подлинности и безупречного вкуса.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'main:categories' %}" class="btn btn-primary btn-lg px-4 py-3">
+                            <i class="fas fa-eye me-2"></i>Смотреть коллекцию
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-lg px-4 py-3">
+                            <i class="fas fa-play-circle me-2"></i>Видеообзор
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0">
+                    <div class="position-relative">
+                        <!-- ТВОЯ КАРТИНКА -->
+                        <img src="{% static 'images/alcohol-banner.jpg' %}"
+                             class="img-fluid rounded shadow-lg"
+                             alt="Элитный алкоголь"
+                             style="border: 2px solid #8b0000; max-height: 500px; width: 100%; object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 translate-middle">
+                            <div class="bg-wine rounded-circle p-2 shadow">
+                                <i class="fas fa-award text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
- </section>
+    </div>
+</section>
 
+<!-- Категории -->
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Наши коллекции</h2>
+                <p class="lead">Выберите категорию для просмотра эксклюзивных напитков</p>
+            </div>
 
+            <div class="row g-4">
+                <!-- Категория 1 -->
+                <div class="col-md-3">
+                    <div class="card h-100 text-center p-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">ВИСКИ</h5>
+                            <p class="card-text small text-muted">
+                                Шотландские односолодовые, японские, ирландские виски,
+                                американские бурбоны и ржаные виски. Выдержка от 10 лет.
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="#" class="btn btn-outline-light btn-sm w-100">Смотреть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Категория 2 -->
+                <div class="col-md-3">
+                    <div class="card h-100 text-center p-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">КОНЬЯК</h5>
+                            <p class="card-text small text-muted">
+                                Французские коньяки высших категорий: VSOP, XO, Extra.
+                                Исключительно из региона Коньяк, выдержка от 6 лет.
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="#" class="btn btn-outline-light btn-sm w-100">Смотреть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Категория 3 -->
+                <div class="col-md-3">
+                    <div class="card h-100 text-center p-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">ВИНА</h5>
+                            <p class="card-text small text-muted">
+                                Французские бордо и бургундии, итальянские бароло и брунелло,
+                                испанские риохи. Коллекционные вина премиум-класса.
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="#" class="btn btn-outline-light btn-sm w-100">Смотреть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Категория 4 -->
+                <div class="col-md-3">
+                    <div class="card h-100 text-center p-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">ЭКСКЛЮЗИВ</h5>
+                            <p class="card-text small text-muted">
+                                Ограниченные тиражи, подарочные издания, редкие коллекционные
+                                экземпляры. Только для ценителей и коллекционеров.
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="#" class="btn btn-outline-light btn-sm w-100">Смотреть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <a href="{% url 'main:categories' %}" class="btn btn-primary px-5 py-3">
+                    Все коллекции <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="mb-4">
+                            <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
+                                 style="width: 80px; height: 80px;">
+                                <i class="fas fa-certificate fa-2x text-wine"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Гарантия подлинности</h5>
+                        <p class="text-muted small">
+                            Все напитки сопровождаются сертификатами подлинности
+                            и прошли проверку нашими экспертами.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="mb-4">
+                            <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
+                                 style="width: 80px; height: 80px;">
+                                <i class="fas fa-user-tie fa-2x text-wine"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Консьерж-сервис</h5>
+                        <p class="text-muted small">
+                            Персональный подбор напитков профессиональным сомелье.
+                            Консультации по выбору и сочетаниям.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="mb-4">
+                            <div class="bg-wine bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
+                                 style="width: 80px; height: 80px;">
+                                <i class="fas fa-gift fa-2x text-wine"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Подарочная упаковка</h5>
+                        <p class="text-muted small">
+                            Бесплатная подарочная упаковка премиум-класса.
+                            Возможность нанесения персональной гравировки.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
-
-
-
-
-

@@ -1,52 +1,453 @@
-<html lang="ru" data-bs-theme="dark">
-{% load static %}
-<head>
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-</head>
-<body>
 
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"><a href="/"
-                                                                                   class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-    <svg class="bi me-2" width="40" height="32" aria-hidden="true">
-        <use xlink:href="#bootstrap"></use>
-    </svg>
-    <span class="fs-4"><ya-tr-span data-index="2-0" data-translated="true" data-source-lang="en" data-target-lang="ru"
-                                   data-value="Simple header" data-translation="Простой заголовок" data-ch="0"
-                                   data-type="trSpan"
-                                   style="visibility: inherit !important;">Простой заголовок</ya-tr-span></span> </a>
-    <ul class="nav nav-pills">
-        {% if user.is_authenticated %}
-        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Главная</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Функции</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Цены</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Часто задаваемые вопросы</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">О нас</a></li>
-        <li class="nav-item"><a href="{% url 'users:logout' %}" class="nav-link">Выход</a></li>
-        {% else %}
-        <li class="nav-item"><a href="{% url 'users:login' %}" class="nav-link">Вход</a></li>
-        <li class="nav-item"><a href="{% url 'users:register' %}" class="nav-link">Регистрация</a></li>
-        {% endif %}
-    </ul>
-</header>
-<main>
-    {% block content %}
-    {% endblock %}
-</main>
-<footer class="text-body-secondary py-5">
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Spirits | Элитный алкоголь</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Реалистичное звёздное небо */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Контрастный текст */
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        p, .text-muted, .lead {
+            color: #cccccc !important;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Звёзды 1 слой - далёкие звёзды (мелкие) */
+        #stars1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: transparent;
+        }
+
+        /* Звёзды 2 слой - средние звёзды */
+        #stars2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: transparent;
+        }
+
+        /* Звёзды 3 слой - яркие звёзды */
+        #stars3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: transparent;
+        }
+
+        /* Стили для звёзд */
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+        }
+
+        /* Разные размеры и цвета для реализма */
+        .star.type1 { background: #ffffff; } /* Белые звёзды (большинство) */
+        .star.type2 { background: #f8f8c8; } /* Тёплые жёлтые */
+        .star.type3 { background: #c8d8f8; } /* Холодные голубые */
+
+        /* Анимация мерцания */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Навигация - тёмная с винными акцентами */
+        .navbar {
+            background: rgba(20, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(120, 40, 60, 0.4);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            color: #c28b8b !important;
+            text-shadow: 0 0 10px rgba(194, 139, 139, 0.3);
+        }
+
+        .nav-link {
+            color: #cccccc !important;
+            font-weight: 400;
+            padding: 0.5rem 1.2rem !important;
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .nav-link:hover {
+            color: #ffffff !important;
+            background: rgba(120, 40, 60, 0.2);
+        }
+
+        .nav-link.active {
+            color: #ffffff !important;
+            background: rgba(120, 40, 60, 0.3);
+            border-bottom: 2px solid #8b0000;
+        }
+
+        /* Винный цвет (тёмно-бордовый) */
+        .text-wine {
+            color: #8b0000 !important;
+        }
+
+        .bg-wine {
+            background-color: #8b0000 !important;
+        }
+
+        .border-wine {
+            border-color: #8b0000 !important;
+        }
+
+        /* Кнопки - винный цвет */
+        .btn-primary {
+            background: linear-gradient(135deg, #6d1f1f, #8b0000);
+            border: none;
+            padding: 0.7rem 1.8rem;
+            font-weight: 500;
+            border-radius: 4px;
+            color: #fff !important;
+            transition: all 0.3s ease;
+            text-shadow: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #8b0000, #6d1f1f);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        .btn-outline-light {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #8b0000;
+        }
+
+        /* Карточки - с тёмным фоном чтобы текст был виден */
+        .card {
+            background: rgba(30, 20, 25, 0.85);
+            border: 1px solid rgba(120, 40, 60, 0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            color: #cccccc;
+        }
+
+        .card:hover {
+            border-color: #8b0000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.2);
+        }
+
+        .card-title {
+            color: #ffffff !important;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Футер */
+        .footer {
+            background: rgba(20, 10, 15, 0.95);
+            border-top: 1px solid rgba(120, 40, 60, 0.4);
+            padding: 2.5rem 0 1.5rem;
+            margin-top: auto;
+        }
+
+        .footer h5, .footer h6 {
+            color: #c28b8b !important;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-link {
+            color: #aaaaaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #c28b8b;
+        }
+
+        /* Основной контент - добавляем затемнение фона для читаемости */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 200px);
+        }
+
+        .content-section {
+            background: rgba(15, 8, 12, 0.6);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(120, 40, 60, 0.1);
+        }
+
+        /* Стили для dropdown чтобы форма работала */
+        .dropdown-menu form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .dropdown-menu button[type="submit"] {
+            width: 100%;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+        }
+
+        .dropdown-menu button[type="submit"]:hover {
+            background-color: rgba(139, 0, 0, 0.1);
+        }
+    </style>
+
+    <!-- Подключение красивого шрифта -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<!-- 3 слоя звёзд для реалистичности -->
+<div id="stars1"></div>
+<div id="stars2"></div>
+<div id="stars3"></div>
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg">
     <div class="container">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Главная</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Функции</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Цены</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Часто задаваемые вопросы</a>
+        <a class="navbar-brand" href="{% url 'main:index' %}">
+            <i class="fas fa-wine-glass-alt me-2"></i>
+            STELLAR SPIRITS
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon" style="filter: invert(1)"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+                       href="{% url 'main:index' %}">Главная</a>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">О нас</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'categories' %}active{% endif %}"
+                       href="{% url 'main:categories' %}">Коллекции</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                       href="{% url 'main:about' %}">О доме</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Консьерж-сервис</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Контакты</a>
+                </li>
             </ul>
-            <p class="text-center text-body-secondary">© 2025 Company, Inc</p></footer>
+
+            <!-- БЛОК ПОЛЬЗОВАТЕЛЯ - ИСПРАВЛЕНО -->
+            <!-- БЛОК ПОЛЬЗОВАТЕЛЯ - ПРОСТОЙ И РАБОЧИЙ -->
+<div class="d-flex align-items-center ms-3">
+    {% if user.is_authenticated %}
+    <div class="d-flex align-items-center gap-3">
+        <!-- Информация о пользователе -->
+        <div class="text-end">
+            <div class="small text-light">{{ user.username|truncatechars:15 }}</div>
+            <div class="text-wine small">Клубный член</div>
+        </div>
+
+        <!-- Иконка профиля -->
+        <div class="position-relative">
+            <i class="fas fa-user-circle fa-lg text-light"></i>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div class="d-flex gap-2">
+            <a href="#" class="btn btn-outline-light btn-sm" title="Профиль">
+                <i class="fas fa-user"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm" title="Корзина">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+
+            <!-- КНОПКА ВЫХОДА - 100% РАБОТАЕТ -->
+            <form method="post" action="{% url 'users:logout' %}" class="m-0">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger btn-sm" title="Выйти">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="d-flex gap-2">
+        <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-sm">
+            <i class="fas fa-sign-in-alt me-1"></i>Вход
+        </a>
+        <a href="{% url 'users:register' %}" class="btn btn-primary btn-sm">
+            <i class="fas fa-user-plus me-1"></i>В клуб
+        </a>
+    </div>
+    {% endif %}
+</div>
+            <!-- КОНЕЦ БЛОКА ПОЛЬЗОВАТЕЛЯ -->
+        </div>
+    </div>
+</nav>
+
+<!-- Основной контент -->
+<main class="main-content">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Футер -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <h5 class="mb-3"><i class="fas fa-wine-glass-alt me-2"></i>Stellar Spirits</h5>
+                <p class="small">Дом элитных алкогольных напитков с 1995 года. Гарантия подлинности и высочайшего
+                    качества.</p>
+            </div>
+            <div class="col-lg-2 col-6 mb-4">
+                <h6 class="mb-3">Коллекции</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="{% url 'main:categories' %}" class="footer-link">Все категории</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link">Эксклюзив</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link">Подарки</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-6 mb-4">
+                <h6 class="mb-3">Сервис</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="footer-link">Доставка</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link">Консьерж</a></li>
+                    <li class="mb-2"><a href="#" class="footer-link">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h6 class="mb-3">Контакты</h6>
+                <p class="small mb-2"><i class="fas fa-phone me-2"></i>+7 (495) 123-45-67</p>
+                <p class="small mb-3"><i class="fas fa-envelope me-2"></i>concierge@stellar-spirits.ru</p>
+                <p class="small"><i class="fas fa-map-marker-alt me-2"></i>Москва, ул. Тверская, 15</p>
+            </div>
+        </div>
+        <hr class="mt-4 mb-3" style="border-color: rgba(194, 139, 139, 0.3)">
+        <div class="text-center">
+            <p class="small mb-0">
+                © 1995–2026 Дом Stellar Spirits. Все права защищены.
+                <br>
+                <span class="text-wine">Алкогольная продукция предназначена для лиц старше 18 лет</span>
+            </p>
+        </div>
     </div>
 </footer>
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Генератор реалистичных звёзд -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Функция создания звёзд для слоя
+        function createStars(layerId, count, minSize, maxSize, minOpacity, maxOpacity, minDuration, maxDuration) {
+            const layer = document.getElementById(layerId);
+
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                // Тип звезды для разного цвета
+                const starType = Math.floor(Math.random() * 3) + 1;
+                star.classList.add('type' + starType);
+
+                // Размер
+                const size = Math.random() * (maxSize - minSize) + minSize;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+
+                // Позиция
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+
+                // Начальная непрозрачность
+                const opacity = Math.random() * (maxOpacity - minOpacity) + minOpacity;
+                star.style.opacity = opacity;
+
+                // Анимация мерцания
+                const duration = Math.random() * (maxDuration - minDuration) + minDuration;
+                const delay = Math.random() * 5;
+                star.style.animationDuration = `${duration}s`;
+                star.style.animationDelay = `${delay}s`;
+
+                layer.appendChild(star);
+            }
+        }
+
+        // Слой 1: далёкие мелкие звёзды (400 штук)
+        createStars('stars1', 400, 0.5, 1, 0.1, 0.3, 4, 8);
+
+        // Слой 2: средние звёзды (150 штук)
+        createStars('stars2', 150, 1, 1.5, 0.3, 0.6, 3, 6);
+
+        // Слой 3: ближние яркие звёзды (50 штук)
+        createStars('stars3', 50, 1.5, 2.5, 0.6, 1, 2, 4);
+
+        // Фикс для dropdown чтобы форма работала
+        document.querySelectorAll('.dropdown-menu form button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // Останавливаем всплытие события
+            });
+        });
+    });
+</script>
+
+{% block extra_js %}{% endblock %}
 </body>
 </html>

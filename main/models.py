@@ -3,10 +3,10 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, verbose_name='')
-    slug = models.SlugField(max_length=200, unique=True, verbose_name='')
-    description = models.TextField(verbose_name='')
-    image = models.ImageField(upload_to='categories/', verbose_name='')
+    name = models.CharField(max_length=200, verbose_name='Название категории')
+    slug = models.SlugField(max_length=200, unique=True, verbose_name='Слаг')
+    description = models.TextField(verbose_name='Краткое описание')
+    image = models.ImageField(upload_to='categories/', verbose_name='Картинку категории')
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -23,15 +23,15 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, verbose_name='')
-    name = models.CharField(max_length=200, verbose_name='')
-    slug = models.SlugField(max_length=200, verbose_name='')
-    image = models.ImageField(upload_to='products/', blank=True, verbose_name='')
-    description = models.TextField(blank=True, verbose_name='')
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='')
-    available = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, verbose_name='К какой категории принадлежит')
+    name = models.CharField(max_length=200, verbose_name='Название')
+    slug = models.SlugField(max_length=200, verbose_name='Слаг')
+    image = models.ImageField(upload_to='products/', blank=True)
+    description = models.TextField(blank=True, verbose_name='Описание')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    available = models.BooleanField(default=True, verbose_name='Опубликовать')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Время обновления')
 
     def save(self, *args, **kwargs):
         if not self.slug:

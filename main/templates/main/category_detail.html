@@ -1,36 +1,208 @@
 {% extends 'main/base.html' %}
-
+{% load static %}
 
 {% block content %}
-{% if con%}
- <section class="py-5 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">Категории {{ con.name }}</h1>
-                <p class="lead text-body-secondary">Лучшие алкогольные напитки со всего света и не только</p>
+<section class="py-5">
+    <div class="container">
+        <div class="content-section">
+            <!-- Заголовок категории -->
+            <div class="text-center mb-5">
+                <h1 class="fw-bold display-4 mb-3 text-wine">{{ category.name }}</h1>
+                <p class="lead text-muted">{{ category.description }}</p>
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <span class="badge bg-wine px-3 py-2">
+                        <i class="fas fa-wine-bottle me-2"></i>{{ con.count }} напитков
+                    </span>
+                    <span class="badge bg-secondary px-3 py-2">
+                        <i class="fas fa-star me-2"></i>Премиум
+                    </span>
+                </div>
             </div>
-        </div>
- </section>
-{% endif %}
-{% for i in con %}
-    <div class="album py-5 bg-body-tertiary">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <img src="{{ i.image.url }}">
-                        <div class="card-body"><p class="card-text">{{i.description}}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="">Посмотреть</a>
-                                </div>
+
+            {% if con %}
+                <!-- Фильтры и сортировка -->
+                <div class="row mb-5">
+                    <div class="col">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">Коллекция напитков</h4>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-light dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown">
+                                    <i class="fas fa-sort me-2"></i>Сортировка
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">По цене (возрастание)</a></li>
+                                    <li><a class="dropdown-item" href="#">По цене (убывание)</a></li>
+                                    <li><a class="dropdown-item" href="#">По популярности</a></li>
+                                    <li><a class="dropdown-item" href="#">По новизне</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Сетка товаров -->
+                <div class="row g-4">
+                    {% for product in con %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <!-- Картинка товара -->
+                            <div class="position-relative overflow-hidden rounded-top" style="height: 220px;">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}"
+                                     class="img-fluid w-100 h-100 object-fit-cover"
+                                     alt="{{ product.name }}"
+                                     style="transition: transform 0.5s ease;">
+                                {% else %}
+                                <div class="bg-dark d-flex align-items-center justify-content-center h-100">
+                                    <i class="fas fa-wine-bottle fa-3x text-wine"></i>
+                                </div>
+                                {% endif %}
+
+                                <!-- Бейдж наличия -->
+                                {% if product.available %}
+                                <div class="position-absolute top-0 start-0 m-3">
+                                    <span class="badge bg-success">В наличии</span>
+                                </div>
+                                {% else %}
+                                <div class="position-absolute top-0 start-0 m-3">
+                                    <span class="badge bg-danger">Нет в наличии</span>
+                                </div>
+                                {% endif %}
+
+                                <!-- Иконка избранного -->
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <button class="btn btn-outline-light btn-sm rounded-circle">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Контент товара -->
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">{{ product.name }}</h5>
+                                <p class="card-text text-muted small mb-3">
+                                    {{ product.description|truncatechars:80 }}
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4 class="text-wine mb-0">{{ product.price }} ₽</h4>
+                                        <small class="text-muted">за бутылку</small>
+                                    </div>
+
+                                    {% if product.available %}
+                                    <button class="btn btn-primary btn-sm">
+                                        <i class="fas fa-shopping-cart me-1"></i>В корзину
+                                    </button>
+                                    {% else %}
+                                    <button class="btn btn-outline-secondary btn-sm" disabled>
+                                        <i class="fas fa-ban me-1"></i>Нет в наличии
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Ссылка на детальную страницу -->
+                            <div class="card-footer bg-transparent border-top-0 pt-0">
+                                <a href="{% url 'main:product_detail' product.slug %}"
+                                   class="text-decoration-none small text-wine d-flex align-items-center">
+                                    <i class="fas fa-info-circle me-2"></i>Подробнее о напитке
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Пагинация (если нужно) -->
+                {% if con.has_other_pages %}
+                <nav class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if con.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ con.previous_page_number }}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for num in con.paginator.page_range %}
+                            {% if con.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if con.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ con.next_page_number }}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+
+            {% else %}
+                <!-- Если товаров нет -->
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-box-open fa-4x text-muted"></i>
+                    </div>
+                    <h4 class="mb-3">В этой категории пока нет напитков</h4>
+                    <p class="text-muted mb-4">Новые поступления ожидаются в ближайшее время</p>
+                    <a href="{% url 'main:categories' %}" class="btn btn-primary">
+                        <i class="fas fa-arrow-left me-2"></i>К другим коллекциям
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </div>
-{% endfor %}
+</section>
+{% endblock %}
 
+{% block extra_css %}
+<style>
+    .card {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(139, 0, 0, 0.2);
+    }
+
+    .card:hover img {
+        transform: scale(1.05);
+    }
+
+    .object-fit-cover {
+        object-fit: cover;
+    }
+
+    .page-link {
+        background-color: rgba(30, 20, 25, 0.85);
+        border-color: rgba(120, 40, 60, 0.2);
+        color: #cccccc;
+    }
+
+    .page-link:hover {
+        background-color: rgba(120, 40, 60, 0.2);
+        border-color: #8b0000;
+        color: #fff;
+    }
+
+    .page-item.active .page-link {
+        background-color: #8b0000;
+        border-color: #8b0000;
+    }
+</style>
 {% endblock %}
