@@ -1,11 +1,45 @@
 {% extends 'main/base.html' %}
 
-
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>Вход</button>
-</form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h2 class="text-center mb-4">🔑 Вход</h2>
 
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" class="border p-4 rounded">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        <input type="{{ field.field.widget.input_type }}"
+                               name="{{ field.name }}"
+                               class="form-control"
+                               placeholder="Введите {{ field.label|lower }}">
+                        {% if field.errors %}
+                            <small class="text-danger">{{ field.errors }}</small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Войти
+                </button>
+
+                <hr>
+
+                <p class="text-center mb-0">
+                    Нет аккаунта?
+                    <a href="{% url 'users:register' %}">Регистрация</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

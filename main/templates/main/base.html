@@ -290,8 +290,6 @@
                 </li>
             </ul>
 
-            <!-- БЛОК ПОЛЬЗОВАТЕЛЯ - ИСПРАВЛЕНО -->
-            <!-- БЛОК ПОЛЬЗОВАТЕЛЯ - ПРОСТОЙ И РАБОЧИЙ -->
 <div class="d-flex align-items-center ms-3">
     {% if user.is_authenticated %}
     <div class="d-flex align-items-center gap-3">
@@ -306,16 +304,14 @@
             <i class="fas fa-user-circle fa-lg text-light"></i>
         </div>
 
-        <!-- Кнопки действий -->
         <div class="d-flex gap-2">
-            <a href="#" class="btn btn-outline-light btn-sm" title="Профиль">
+            <a href="{% url 'users:profile' %}" class="btn btn-outline-light btn-sm" title="Профиль">
                 <i class="fas fa-user"></i>
             </a>
-            <a href="#" class="btn btn-outline-light btn-sm" title="Корзина">
+            <a href="{% url 'cart:detail' %}" class="btn btn-outline-light btn-sm" title="Корзина">
                 <i class="fas fa-shopping-cart"></i>
             </a>
 
-            <!-- КНОПКА ВЫХОДА - 100% РАБОТАЕТ -->
             <form method="post" action="{% url 'users:logout' %}" class="m-0">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-danger btn-sm" title="Выйти">

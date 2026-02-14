@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>🛒 Моя корзина</h1>
+
+    {% if items %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }} ₽</td>
+                    <td>
+                        <form method="post" action="{% url 'cart:update' item.product.id %}">
+                            {% csrf_token %}
+                            <input type="number" name="count" value="{{ item.count }}" min="1" style="width: 60px;">
+                            <button type="submit" class="btn btn-sm btn-outline-primary">🔄</button>
+                        </form>
+                    </td>
+                    <td>{{ item.get_total_price }} ₽</td>
+                    <td>
+                        <a href="{% url 'cart:remove' item.product.id %}" class="btn btn-danger btn-sm">❌</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3"><strong>ИТОГО:</strong></td>
+                    <td><strong>{{ total }} ₽</strong></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="mt-3">
+            <a href="{% url 'main:index' %}" class="btn btn-outline-primary">← Продолжить покупки</a>
+            <a href="{% url 'cart:clear' %}" class="btn btn-outline-danger">Очистить корзину</a>
+            <a href="#" class="btn btn-success">Оформить заказ →</a>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Ваша корзина пуста
+        </div>
+        <a href="{% url 'main:index' %}" class="btn btn-primary">В каталог</a>
+    {% endif %}
+</div>
+{% endblock %}
